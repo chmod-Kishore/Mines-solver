@@ -208,37 +208,34 @@ class MinesweeperGUI:
         self.ai_thread.start()
         
     def create_board_gui(self, width, height):
-        # Determine button size based on board dimensions
+    # Determine button size based on board dimensions
         button_size = min(30, 600 // max(width, height))
-        
-        # Create a font object for the cell buttons
+    
+    # Create a font object for the cell buttons
         cell_font = font.Font(size=button_size // 2)
-        
-        # Create a container for the cells
+    
+    # Create a container for the cells
         cell_container = ttk.Frame(self.board_frame)
         cell_container.pack(expand=True, padx=5, pady=5)
-        
-        # Create column headers
-        header_frame = ttk.Frame(cell_container)
-        header_frame.grid(row=0, column=0, sticky="w")
-        
-        # Empty cell for top-left corner
-        ttk.Label(header_frame, text="", width=2).grid(row=0, column=0)
-        
-        # Column indices
+    
+    # Create column headers
+    # Empty cell for top-left corner
+        ttk.Label(cell_container, text="", width=2).grid(row=0, column=0)
+    
+    # Column indices - place directly in the cell_container with same width as cells
         for j in range(width):
-            ttk.Label(header_frame, text=str(j), width=2).grid(row=0, column=j+1)
-            
-        # Create the grid of cells
+            ttk.Label(cell_container, text=str(j), width=2).grid(row=0, column=j+1)
+        
+    # Create the grid of cells
         self.cell_buttons = []
         for i in range(height):
             row_buttons = []
-            
-            # Row index
+        
+        # Row index
             ttk.Label(cell_container, text=str(i), width=2).grid(row=i+1, column=0)
-            
+        
             for j in range(width):
-                # Use Label for display-only cells
+            # Use Label for display-only cells
                 cell = ttk.Label(
                     cell_container, 
                     text="?",
@@ -252,8 +249,8 @@ class MinesweeperGUI:
                 cell.grid(row=i+1, column=j+1, padx=1, pady=1)
                 row_buttons.append(cell)
             self.cell_buttons.append(row_buttons)
-        
-        # Update scroll region
+    
+    # Update scroll region
         self.board_frame.update_idletasks()
         self.board_canvas.configure(scrollregion=self.board_canvas.bbox("all"))
             
